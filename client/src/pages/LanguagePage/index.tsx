@@ -12,7 +12,7 @@ const LanguagePage: FC<ILanguagePageProps> = () => {
             title: 'Модуль 1',
             lessons: [
                 {
-                    title: 'Урок 1',
+                    title: 'Урок 1 — Введение в корейский язык',
                     progress: 100,
                     content: ['SomeContent']
                 }
