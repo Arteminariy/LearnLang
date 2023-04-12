@@ -9,14 +9,34 @@ const LanguagePage: FC<ILanguagePageProps> = () => {
 
     const modules: IModule[] = [
         {
-            title: 'Модуль 1',
+            id: 1,
+            title: 'Модуль 1 — Введение',
             lessons: [
                 {
+                    id: 1,
                     title: 'Урок 1 — Введение в корейский язык',
                     progress: 100,
                     content: ['SomeContent']
+                },
+                {
+                    id: 2,
+                    title: 'Урок 2 — Алфавит',
+                    progress: 0,
+                    content: ['SomeContent']
                 }
-            ] 
+            ]
+        },
+        {
+            id: 2,
+            title: 'Модуль 2',
+            lessons: [
+                {
+                    id: 3,
+                    title: 'Урок 1 — Глаголы',
+                    progress: 0,
+                    content: ['SomeContent']
+                }
+            ]
         }
     ]
 

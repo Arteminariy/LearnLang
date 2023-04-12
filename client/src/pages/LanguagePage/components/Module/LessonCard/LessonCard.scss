@@ -1,10 +1,14 @@
-.lesson-container {
+.lesson-li {
     list-style-type: none;
+}
+.lesson-link {
     display: flex;
     flex-direction: row;
     align-items: center;
     padding: 10px;
     margin-top: 5px;
+    text-decoration: none;
+    color: #000;
 }
 .lesson__title {
     margin-left: 10px;

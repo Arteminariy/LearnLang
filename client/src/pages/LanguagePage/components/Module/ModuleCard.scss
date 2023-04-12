@@ -2,10 +2,11 @@
     box-shadow: 0px 1px 5px 0px #d6d6d6;
     border-radius: 5px;
     padding: 10px;
+    margin-top: 5px;
 }
 .module__title {
     padding: 10px;
 }
-.module__title:first-of-type {
+.module:first-of-type {
     margin-top: 0px;
 }
