@@ -1,4 +1,5 @@
-import { ForeignKey, HasMany, Model } from 'sequelize-typescript';
+import { ApiProperty } from '@nestjs/swagger';
+import { HasMany, Model } from 'sequelize-typescript';
 import { Column, DataType, Table } from 'sequelize-typescript';
 import { LanguageModule } from 'src/language-modules/entities/language-module.entity';
 
@@ -8,6 +9,7 @@ interface LanguageCreationAttributes {
 
 @Table({ tableName: 'languages', createdAt: false, updatedAt: false })
 export class Language extends Model<Language, LanguageCreationAttributes> {
+	@ApiProperty({ description: 'ID языка', example: '1' })
 	@Column({
 		type: DataType.INTEGER,
 		unique: true,
@@ -16,6 +18,7 @@ export class Language extends Model<Language, LanguageCreationAttributes> {
 	})
 	id: number;
 
+	@ApiProperty({ description: 'Название языка', example: 'Русский' })
 	@Column({
 		type: DataType.STRING,
 		unique: true,
@@ -23,7 +26,6 @@ export class Language extends Model<Language, LanguageCreationAttributes> {
 	})
 	title: string;
 
-	@ForeignKey(() => LanguageModule)
 	@HasMany(() => LanguageModule)
-	modulesIds: LanguageModule[];
+	modules: LanguageModule[];
 }

@@ -1,34 +1,90 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+	Controller,
+	Get,
+	Post,
+	Body,
+	Patch,
+	Param,
+	Delete,
+} from '@nestjs/common';
 import { LanguagesService } from './languages.service';
 import { CreateLanguageDto } from './dto/create-language.dto';
 import { UpdateLanguageDto } from './dto/update-language.dto';
+import { ApiBody, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { Language } from './entities/language.entity';
 
+@ApiTags('Языки')
 @Controller('languages')
 export class LanguagesController {
-  constructor(private readonly languagesService: LanguagesService) {}
+	constructor(private readonly languagesService: LanguagesService) {}
 
-  @Post()
-  create(@Body() createLanguageDto: CreateLanguageDto) {
-    return this.languagesService.create(createLanguageDto);
-  }
+	@ApiOperation({ summary: 'Создать новый язык' })
+	@ApiResponse({
+		status: 201,
+		description: 'Язык успешно создан',
+		type: Language,
+	})
+	@ApiBody({ type: CreateLanguageDto })
+	@Post()
+	create(@Body() createLanguageDto: CreateLanguageDto) {
+		return this.languagesService.create(createLanguageDto);
+	}
 
-  @Get()
-  findAll() {
-    return this.languagesService.findAll();
-  }
+	@ApiOperation({ summary: 'Получить языки' })
+	@ApiResponse({
+		status: 200,
+		description: 'Языки успешно получены',
+		type: [Language],
+	})
+	@Get()
+	findAll() {
+		return this.languagesService.findAll();
+	}
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.languagesService.findOne(+id);
-  }
+	@ApiOperation({ summary: 'Получить язык' })
+	@ApiResponse({
+		status: 200,
+		description: 'Язык успешно получен',
+		type: Language,
+	})
+	@Get(':id')
+	findOne(@Param('id') id: string) {
+		return this.languagesService.findOne(+id);
+	}
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateLanguageDto: UpdateLanguageDto) {
-    return this.languagesService.update(+id, updateLanguageDto);
-  }
+	@ApiOperation({ summary: 'Обновить язык' })
+	@ApiResponse({
+		status: 200,
+		description: 'Язык успешно обновлён',
+		type: Language,
+	})
+	@Patch(':id')
+	update(
+		@Param('id') id: string,
+		@Body() updateLanguageDto: UpdateLanguageDto,
+	) {
+		return this.languagesService.update(+id, updateLanguageDto);
+	}
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.languagesService.remove(+id);
-  }
+	@ApiOperation({ summary: 'Добавить языковой модуль' })
+	@ApiResponse({
+		status: 200,
+		description: 'Языковой модуль успешно добавлен',
+		type: Language,
+	})
+	@Post('add-module')
+	addModules(@Body() moduleId: string, languageId: string) {
+		return this.languagesService.addModule(+languageId, +moduleId);
+	}
+
+	@ApiOperation({ summary: 'Удалить язык' })
+	@ApiResponse({
+		status: 200,
+		description: 'Язык успешно удалён',
+		type: 'Удалено успешно',
+	})
+	@Delete(':id')
+	remove(@Param('id') id: string) {
+		return this.languagesService.remove(+id);
+	}
 }

@@ -1,3 +1,4 @@
+import { ApiProperty } from '@nestjs/swagger';
 import { BelongsTo, ForeignKey, HasMany, Model } from 'sequelize-typescript';
 import { Column, DataType, Table } from 'sequelize-typescript';
 import { LanguageLesson } from 'src/language-lessons/entities/language-lesson.entity';
@@ -12,6 +13,7 @@ export class LanguageModule extends Model<
 	LanguageModule,
 	LanguageModuleCreationAttributes
 > {
+	@ApiProperty({ description: 'ID языкового модуля', example: '1' })
 	@Column({
 		type: DataType.INTEGER,
 		unique: true,
@@ -20,6 +22,10 @@ export class LanguageModule extends Model<
 	})
 	id: number;
 
+	@ApiProperty({
+		description: 'Заголовок языкового модуля',
+		example: 'Модуль 1 — Введение',
+	})
 	@Column({
 		type: DataType.STRING,
 		unique: true,
@@ -28,12 +34,12 @@ export class LanguageModule extends Model<
 	title: string;
 
 	@ForeignKey(() => Language)
-	@Column({
-		type: DataType.INTEGER,
-	})
+	@Column
 	languageId: number;
 
-	@ForeignKey(() => LanguageLesson)
+	@BelongsTo(() => Language)
+	language: Language;
+
 	@HasMany(() => LanguageLesson)
-	lessonsIds: LanguageLesson[];
+	lessons: LanguageLesson[];
 }

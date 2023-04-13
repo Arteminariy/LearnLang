@@ -43,4 +43,7 @@ export class LanguageLessonSteps extends Model<
 		type: DataType.INTEGER,
 	})
 	lessonId: number;
+
+	@BelongsTo(() => LanguageLesson)
+	languageLesson: LanguageLesson;
 }

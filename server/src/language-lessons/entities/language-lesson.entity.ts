@@ -31,9 +31,11 @@ export class LanguageLesson extends Model<
 	@Column({
 		type: DataType.INTEGER,
 	})
-	module: number;
+	modulesIds: number;
 
-	@ForeignKey(() => LanguageLessonSteps)
 	@HasMany(() => LanguageLessonSteps)
-	stepsIds: LanguageLessonSteps[];
+	steps: LanguageLessonSteps[];
+
+	@BelongsTo(() => LanguageModule)
+	languageModule: LanguageModule;
 }
