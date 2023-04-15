@@ -51,8 +51,13 @@ export class LanguagesController {
 		type: Language,
 	})
 	@Get(':id')
-	findOne(@Param('id') id: string) {
-		return this.languagesService.findOne(+id);
+	findOne(
+		@Param('id') id: string,
+		@Body() module: boolean,
+		lesson: boolean,
+		steps: boolean,
+	) {
+		return this.languagesService.findOne(+id, module, lesson, steps);
 	}
 
 	@ApiOperation({ summary: 'Обновить язык' })

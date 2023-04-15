@@ -66,27 +66,72 @@ export class LanguagesService {
 		}
 	}
 
-	async findOne(id: number) {
+	async findOne(
+		id: number,
+		modules: boolean,
+		lessons: boolean,
+		steps: boolean,
+	) {
 		try {
-			const language = await this.languageRepository.findOne({
-				where: { id },
-				include: [
-					{
-						model: LanguageModule,
-						include: [
-							{
-								model: LanguageLesson,
-								include: [{ model: LanguageLessonSteps }],
-							},
-						],
-					},
-				],
-			});
-			if (!language) {
-				throw new HttpException(
-					`Не получилось получить язык`,
-					HttpStatus.INTERNAL_SERVER_ERROR,
-				);
+			let language;
+			if (modules) {
+				language = await this.languageRepository.findOne({
+					where: { id },
+					include: [
+						{
+							model: LanguageModule,
+						},
+					],
+				});
+				if (!language) {
+					throw new HttpException(
+						`Не получилось получить язык`,
+						HttpStatus.INTERNAL_SERVER_ERROR,
+					);
+				}
+			}
+			if (lessons) {
+				language = await this.languageRepository.findOne({
+					where: { id },
+					include: [
+						{
+							model: LanguageModule,
+							include: [
+								{
+									model: LanguageLesson,
+								},
+							],
+						},
+					],
+				});
+				if (!language) {
+					throw new HttpException(
+						`Не получилось получить язык`,
+						HttpStatus.INTERNAL_SERVER_ERROR,
+					);
+				}
+			}
+			if (steps) {
+				language = await this.languageRepository.findOne({
+					where: { id },
+					include: [
+						{
+							model: LanguageModule,
+							include: [
+								{
+									model: LanguageLesson,
+									include: [{ model: LanguageLessonSteps }],
+								},
+							],
+						},
+					],
+				});
+				if (!language) {
+					throw new HttpException(
+						`Не получилось получить язык`,
+						HttpStatus.INTERNAL_SERVER_ERROR,
+					);
+				}
 			}
 			return language;
 		} catch (error) {

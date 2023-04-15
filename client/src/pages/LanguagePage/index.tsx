@@ -1,17 +1,28 @@
 import { FC } from 'react';
 import './LanguagePage.scss';
 import Module from './components/Module';
-import IModule from '../../types/IModule';
 import { getLanguages } from 'src/http/getLanguage';
 import { useQuery } from '@tanstack/react-query';
 
 interface ILanguagePageProps {}
 
 const LanguagePage: FC<ILanguagePageProps> = () => {
-	const { data, isLoading, isSuccess } = useQuery({
+	const { data, isLoading, isSuccess, isError } = useQuery({
 		queryFn: () => getLanguages(),
 		queryKey: ['languages', 'all'],
 	});
+
+	if (isLoading) {
+		return (
+			<h3>Loading...</h3>
+		)
+	}
+
+	if (isError) {
+		return (
+			<h3>Ошибка</h3>
+		)
+	}
 
 	return (
 		<div className="lang-page__wrapper">

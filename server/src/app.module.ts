@@ -9,6 +9,7 @@ import { LanguageLessonsStepsModule } from './language-lessons-steps/language-le
 import { LanguageModule } from './language-modules/entities/language-module.entity';
 import { LanguageLesson } from './language-lessons/entities/language-lesson.entity';
 import { LanguageLessonSteps } from './language-lessons-steps/entities/language-lessons-step.entity';
+import { UserModule } from './user/user.module';
 
 @Module({
 	imports: [
@@ -35,6 +36,7 @@ import { LanguageLessonSteps } from './language-lessons-steps/entities/language-
 		LanguageModulesModule,
 		LanguageLessonsModule,
 		LanguageLessonsStepsModule,
+		UserModule,
 	],
 	controllers: [],
 	providers: [],
