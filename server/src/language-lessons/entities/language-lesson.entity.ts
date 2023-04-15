@@ -31,7 +31,7 @@ export class LanguageLesson extends Model<
 	@Column({
 		type: DataType.INTEGER,
 	})
-	modulesIds: number;
+	moduleId: number;
 
 	@HasMany(() => LanguageLessonSteps)
 	steps: LanguageLessonSteps[];

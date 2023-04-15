@@ -34,7 +34,9 @@ export class LanguageModule extends Model<
 	title: string;
 
 	@ForeignKey(() => Language)
-	@Column
+	@Column({
+		type: DataType.INTEGER,
+	})
 	languageId: number;
 
 	@BelongsTo(() => Language)

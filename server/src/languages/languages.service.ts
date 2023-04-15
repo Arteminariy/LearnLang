@@ -4,6 +4,8 @@ import { UpdateLanguageDto } from './dto/update-language.dto';
 import { InjectModel } from '@nestjs/sequelize';
 import { Language } from './entities/language.entity';
 import { LanguageModule } from 'src/language-modules/entities/language-module.entity';
+import { LanguageLesson } from 'src/language-lessons/entities/language-lesson.entity';
+import { LanguageLessonSteps } from 'src/language-lessons-steps/entities/language-lessons-step.entity';
 
 @Injectable()
 export class LanguagesService {
@@ -35,14 +37,29 @@ export class LanguagesService {
 
 	async findAll() {
 		try {
-			// Получаем все языки из репозитория
-			const languages = await this.languageRepository.findAll();
-			// Возвращаем их
+			const languages = await this.languageRepository.findAll({
+				include: [
+					{
+						model: LanguageModule,
+						include: [
+							{
+								model: LanguageLesson,
+								include: [{ model: LanguageLessonSteps }],
+							},
+						],
+					},
+				],
+			});
+			if (!languages) {
+				throw new HttpException(
+					`Не получилось получить языки`,
+					HttpStatus.INTERNAL_SERVER_ERROR,
+				);
+			}
 			return languages;
 		} catch (error) {
-			// Если произошла ошибка, выбрасываем исключение с кодом 500 и причиной
-			throw new HttpException(
-				'Ошибка при получении языков',
+			return new HttpException(
+				'Ошибка при получении языка',
 				HttpStatus.INTERNAL_SERVER_ERROR,
 				{ cause: error },
 			);
@@ -53,7 +70,24 @@ export class LanguagesService {
 		try {
 			const language = await this.languageRepository.findOne({
 				where: { id },
+				include: [
+					{
+						model: LanguageModule,
+						include: [
+							{
+								model: LanguageLesson,
+								include: [{ model: LanguageLessonSteps }],
+							},
+						],
+					},
+				],
 			});
+			if (!language) {
+				throw new HttpException(
+					`Не получилось получить язык`,
+					HttpStatus.INTERNAL_SERVER_ERROR,
+				);
+			}
 			return language;
 		} catch (error) {
 			return new HttpException(
@@ -78,36 +112,6 @@ export class LanguagesService {
 		} catch (error) {
 			return new HttpException(
 				'Ошибка при изменении языка',
-				HttpStatus.INTERNAL_SERVER_ERROR,
-				{ cause: error },
-			);
-		}
-	}
-
-	async addModule(languageId: number, moduleId: number) {
-		try {
-			const language = await this.languageRepository.findByPk(languageId);
-			if (!language) {
-				throw new HttpException(
-					'Нет языка с таким id',
-					HttpStatus.BAD_REQUEST,
-				);
-			}
-			const module = await this.languageModuleRepository.findByPk(
-				moduleId,
-			);
-			if (!module) {
-				throw new HttpException(
-					'Нет языкового модуля с таким id',
-					HttpStatus.BAD_REQUEST,
-				);
-			}
-			await module.$add('languageId', language.id)
-			await language.$add('modules', module);
-			return language;
-		} catch (error) {
-			return new HttpException(
-				'Ошибка при добавлении языкового модуля в язык',
 				HttpStatus.INTERNAL_SERVER_ERROR,
 				{ cause: error },
 			);

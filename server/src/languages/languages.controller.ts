@@ -72,11 +72,6 @@ export class LanguagesController {
 		description: 'Языковой модуль успешно добавлен',
 		type: Language,
 	})
-	@Post('add-module')
-	addModules(@Body() moduleId: string, languageId: string) {
-		return this.languagesService.addModule(+languageId, +moduleId);
-	}
-
 	@ApiOperation({ summary: 'Удалить язык' })
 	@ApiResponse({
 		status: 200,
