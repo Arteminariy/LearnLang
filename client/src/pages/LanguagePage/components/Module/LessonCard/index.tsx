@@ -16,7 +16,7 @@ const LessonCard: FC<ILessonCardProps> = ({lesson}) => {
                     height={80}
                     width={80}
                     autoFit={false}
-                    percent={lesson.progress / 100}
+                    percent={lesson.progress ? lesson.progress / 100 : 0}
                     color={['#5B8FF9', '#E8EDF3']}
                 />
                 <h3 className="lesson__title">{lesson.title}</h3>

@@ -12,9 +12,9 @@ const ModuleCard: FC<IModuleCardProps> = ({module}) => {
         <div className='module'>
             <h2 className="module__title">{module.title}</h2>
             <ul className='module__lessons-list'>
-            {module.lessons.map(lesson => {
+            {module.lessons.map((lesson, index) => {
                 return (
-                    <Lesson lesson={lesson}/>
+                    <Lesson key={index} lesson={lesson}/>
                 )
             })}
             </ul>

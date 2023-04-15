@@ -6,6 +6,7 @@ import {
 	Patch,
 	Param,
 	Delete,
+	Logger,
 } from '@nestjs/common';
 import { LanguagesService } from './languages.service';
 import { CreateLanguageDto } from './dto/create-language.dto';
@@ -16,6 +17,7 @@ import { Language } from './entities/language.entity';
 @ApiTags('Языки')
 @Controller('languages')
 export class LanguagesController {
+	private logger = new Logger();
 	constructor(private readonly languagesService: LanguagesService) {}
 
 	@ApiOperation({ summary: 'Создать новый язык' })
@@ -38,6 +40,7 @@ export class LanguagesController {
 	})
 	@Get()
 	findAll() {
+		this.logger.log('Get запрос на /api/languages/');
 		return this.languagesService.findAll();
 	}
 
