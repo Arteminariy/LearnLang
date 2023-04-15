@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { HasMany, Model } from 'sequelize-typescript';
 import { Column, DataType, Table } from 'sequelize-typescript';
-import { LanguageModule } from 'src/language-modules/entities/language-module.entity';
+import { Module } from 'src/modules/entities/module.entity';
 
 interface LanguageCreationAttributes {
 	title: string;
@@ -26,6 +26,6 @@ export class Language extends Model<Language, LanguageCreationAttributes> {
 	})
 	title: string;
 
-	@HasMany(() => LanguageModule)
-	modules: LanguageModule[];
+	@HasMany(() => Module)
+	modules: Module[];
 }

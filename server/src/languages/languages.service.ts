@@ -3,16 +3,14 @@ import { CreateLanguageDto } from './dto/create-language.dto';
 import { UpdateLanguageDto } from './dto/update-language.dto';
 import { InjectModel } from '@nestjs/sequelize';
 import { Language } from './entities/language.entity';
-import { LanguageModule } from 'src/language-modules/entities/language-module.entity';
-import { LanguageLesson } from 'src/language-lessons/entities/language-lesson.entity';
-import { LanguageLessonSteps } from 'src/language-lessons-steps/entities/language-lessons-step.entity';
+import { Module } from 'src/modules/entities/module.entity';
+import { Lesson } from 'src/lessons/entities/lesson.entity';
+import { Step } from 'src/steps/entities/step.entity';
 
 @Injectable()
 export class LanguagesService {
 	constructor(
 		@InjectModel(Language) private languageRepository: typeof Language,
-		@InjectModel(LanguageModule)
-		private languageModuleRepository: typeof LanguageModule,
 	) {}
 
 	async create(createLanguageDto: CreateLanguageDto) {
@@ -40,11 +38,11 @@ export class LanguagesService {
 			const languages = await this.languageRepository.findAll({
 				include: [
 					{
-						model: LanguageModule,
+						model: Module,
 						include: [
 							{
-								model: LanguageLesson,
-								include: [{ model: LanguageLessonSteps }],
+								model: Lesson,
+								include: [{ model: Step }],
 							},
 						],
 					},
@@ -79,7 +77,7 @@ export class LanguagesService {
 					where: { id },
 					include: [
 						{
-							model: LanguageModule,
+							model: Module,
 						},
 					],
 				});
@@ -95,10 +93,10 @@ export class LanguagesService {
 					where: { id },
 					include: [
 						{
-							model: LanguageModule,
+							model: Module,
 							include: [
 								{
-									model: LanguageLesson,
+									model: Lesson,
 								},
 							],
 						},
@@ -116,11 +114,11 @@ export class LanguagesService {
 					where: { id },
 					include: [
 						{
-							model: LanguageModule,
+							model: Module,
 							include: [
 								{
-									model: LanguageLesson,
-									include: [{ model: LanguageLessonSteps }],
+									model: Lesson,
+									include: [{ model: Step }],
 								},
 							],
 						},

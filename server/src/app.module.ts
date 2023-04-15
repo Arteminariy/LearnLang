@@ -3,13 +3,12 @@ import { LanguagesModule } from './languages/languages.module';
 import { ConfigModule } from '@nestjs/config';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { Language } from './languages/entities/language.entity';
-import { LanguageModulesModule } from './language-modules/language-modules.module';
-import { LanguageLessonsModule } from './language-lessons/language-lessons.module';
-import { LanguageLessonsStepsModule } from './language-lessons-steps/language-lessons-steps.module';
-import { LanguageModule } from './language-modules/entities/language-module.entity';
-import { LanguageLesson } from './language-lessons/entities/language-lesson.entity';
-import { LanguageLessonSteps } from './language-lessons-steps/entities/language-lessons-step.entity';
 import { UserModule } from './user/user.module';
+import { ModulesModule } from './modules/modules.module';
+import { LessonsModule } from './lessons/lessons.module';
+import { StepsModule } from './steps/steps.module';
+import { AuthModule } from './auth/auth.module';
+import { Module as LModule } from './modules/entities/module.entity';
 
 @Module({
 	imports: [
@@ -23,20 +22,16 @@ import { UserModule } from './user/user.module';
 			username: process.env.POSTGRES_USER,
 			password: String(process.env.POSTGRES_PASSWORD),
 			database: process.env.POSTGRES_DB,
-			models: [
-				Language,
-				LanguageModule,
-				LanguageLesson,
-				LanguageLessonSteps,
-			],
+			models: [Language, LModule],
 			autoLoadModels: true,
 			synchronize: true,
 		}),
 		LanguagesModule,
-		LanguageModulesModule,
-		LanguageLessonsModule,
-		LanguageLessonsStepsModule,
 		UserModule,
+		ModulesModule,
+		LessonsModule,
+		StepsModule,
+		AuthModule,
 	],
 	controllers: [],
 	providers: [],
