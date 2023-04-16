@@ -1,18 +1,21 @@
 import { FC } from 'react'
 import './Header.scss'
-import HeaderLink, { IHeaderLink } from './HeaderLink'
- 
-interface IHeaderProps {
-    links: IHeaderLink[]
-}
+import HeaderLink from './HeaderLink'
+import { getModuleType } from 'src/http/getModuleTypes'
+import { useQuery } from '@tanstack/react-query'
 
-const Header: FC<IHeaderProps> = ({links}) => {
+const Header: FC = () => {
+    const { data, isLoading, isSuccess, isError } = useQuery({
+		queryFn: () => getModuleType(),
+		queryKey: ['module-type', 'all'],
+	});
+
     return (
         <header>
             <nav>
-                {links.map(link => {
+                {isSuccess && data.map(link => {
                     return (
-                        <HeaderLink key={link.to} link={link}/>
+                        <HeaderLink key={link.id} type={link}/>
                     )
                 })}
             </nav>

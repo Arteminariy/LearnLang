@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import { FC, useState } from 'react'
 import './LessonCard.scss'
 import ILesson from 'types/ILesson'
 import { RingProgress } from '@ant-design/plots';

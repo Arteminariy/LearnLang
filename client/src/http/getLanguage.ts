@@ -1,4 +1,4 @@
-import axios, { AxiosResponse } from 'axios';
+import axios from 'axios';
 import ILanguage from 'src/types/ILanguage';
 
 export const getLanguages = async (): Promise<ILanguage[]> => {

@@ -1,19 +1,15 @@
 import { FC } from 'react'
 import './HeaderLink.scss'
 import { NavLink } from 'react-router-dom'
+import IModuleType from 'src/types/IModuleType'
  
 interface IHeaderLinkProps {
-    link: IHeaderLink
-}
-  
-export interface IHeaderLink {
-    to: string,
-    text: string
+    type: IModuleType
 }
 
-const HeaderLink: FC<IHeaderLinkProps> = ({link}) => {
+const HeaderLink: FC<IHeaderLinkProps> = ({type}) => {
     return (
-        <NavLink className="header__nav-link" to={link.to}>{link.text}</NavLink>
+        <NavLink className="header__nav-link" to={String(type.id)}>{type.title}</NavLink>
     )
 }
  
