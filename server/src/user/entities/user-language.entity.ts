@@ -44,7 +44,4 @@ export class UserLanguage extends Model<
 
 	@BelongsTo(() => User)
 	user: User;
-
-	@HasOne(() => Language)
-	language: Language;
 }
