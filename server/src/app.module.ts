@@ -13,6 +13,7 @@ import { Lesson } from './lessons/entities/lesson.entity';
 import { Step } from './steps/entities/step.entity';
 import { ModuleTypesModule } from './module-types/module-types.module';
 import { ModuleType } from './module-types/entities/module-type.entity';
+import { RolesModule } from './roles/roles.module';
 
 @Module({
 	imports: [
@@ -37,6 +38,7 @@ import { ModuleType } from './module-types/entities/module-type.entity';
 		StepsModule,
 		AuthModule,
 		ModuleTypesModule,
+		RolesModule,
 	],
 	controllers: [],
 	providers: [],
