@@ -9,6 +9,10 @@ import { LessonsModule } from './lessons/lessons.module';
 import { StepsModule } from './steps/steps.module';
 import { AuthModule } from './auth/auth.module';
 import { Module as LModule } from './modules/entities/module.entity';
+import { Lesson } from './lessons/entities/lesson.entity';
+import { Step } from './steps/entities/step.entity';
+import { ModuleTypesModule } from './module-types/module-types.module';
+import { ModuleType } from './module-types/entities/module-type.entity';
 
 @Module({
 	imports: [
@@ -22,7 +26,7 @@ import { Module as LModule } from './modules/entities/module.entity';
 			username: process.env.POSTGRES_USER,
 			password: String(process.env.POSTGRES_PASSWORD),
 			database: process.env.POSTGRES_DB,
-			models: [Language, LModule],
+			models: [Language, LModule, Lesson, Step, ModuleType],
 			autoLoadModels: true,
 			synchronize: true,
 		}),
@@ -32,6 +36,7 @@ import { Module as LModule } from './modules/entities/module.entity';
 		LessonsModule,
 		StepsModule,
 		AuthModule,
+		ModuleTypesModule,
 	],
 	controllers: [],
 	providers: [],

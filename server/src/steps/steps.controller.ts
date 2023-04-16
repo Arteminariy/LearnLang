@@ -1,34 +1,44 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+	Controller,
+	Get,
+	Post,
+	Body,
+	Patch,
+	Param,
+	Delete,
+} from '@nestjs/common';
 import { StepsService } from './steps.service';
 import { CreateStepDto } from './dto/create-step.dto';
 import { UpdateStepDto } from './dto/update-step.dto';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Шаги')
 @Controller('steps')
 export class StepsController {
-  constructor(private readonly stepsService: StepsService) {}
+	constructor(private readonly stepsService: StepsService) {}
 
-  @Post()
-  create(@Body() createStepDto: CreateStepDto) {
-    return this.stepsService.create(createStepDto);
-  }
+	@Post()
+	create(@Body() createStepDto: CreateStepDto) {
+		return this.stepsService.create(createStepDto);
+	}
 
-  @Get()
-  findAll() {
-    return this.stepsService.findAll();
-  }
+	@Get()
+	findAll() {
+		return this.stepsService.findAll();
+	}
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.stepsService.findOne(+id);
-  }
+	@Get(':id')
+	findOne(@Param('id') id: string) {
+		return this.stepsService.findOne(+id);
+	}
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateStepDto: UpdateStepDto) {
-    return this.stepsService.update(+id, updateStepDto);
-  }
+	@Patch(':id')
+	update(@Param('id') id: string, @Body() updateStepDto: UpdateStepDto) {
+		return this.stepsService.update(+id, updateStepDto);
+	}
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.stepsService.remove(+id);
-  }
+	@Delete(':id')
+	remove(@Param('id') id: string) {
+		return this.stepsService.remove(+id);
+	}
 }

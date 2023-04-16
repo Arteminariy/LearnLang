@@ -39,12 +39,6 @@ export class LanguagesService {
 				include: [
 					{
 						model: Module,
-						include: [
-							{
-								model: Lesson,
-								include: [{ model: Step }],
-							},
-						],
 					},
 				],
 			});
@@ -64,72 +58,21 @@ export class LanguagesService {
 		}
 	}
 
-	async findOne(
-		id: number,
-		modules: boolean,
-		lessons: boolean,
-		steps: boolean,
-	) {
+	async findOne(id: number) {
 		try {
-			let language;
-			if (modules) {
-				language = await this.languageRepository.findOne({
-					where: { id },
-					include: [
-						{
-							model: Module,
-						},
-					],
-				});
-				if (!language) {
-					throw new HttpException(
-						`Не получилось получить язык`,
-						HttpStatus.INTERNAL_SERVER_ERROR,
-					);
-				}
-			}
-			if (lessons) {
-				language = await this.languageRepository.findOne({
-					where: { id },
-					include: [
-						{
-							model: Module,
-							include: [
-								{
-									model: Lesson,
-								},
-							],
-						},
-					],
-				});
-				if (!language) {
-					throw new HttpException(
-						`Не получилось получить язык`,
-						HttpStatus.INTERNAL_SERVER_ERROR,
-					);
-				}
-			}
-			if (steps) {
-				language = await this.languageRepository.findOne({
-					where: { id },
-					include: [
-						{
-							model: Module,
-							include: [
-								{
-									model: Lesson,
-									include: [{ model: Step }],
-								},
-							],
-						},
-					],
-				});
-				if (!language) {
-					throw new HttpException(
-						`Не получилось получить язык`,
-						HttpStatus.INTERNAL_SERVER_ERROR,
-					);
-				}
+			const language = await this.languageRepository.findOne({
+				where: { id },
+				include: [
+					{
+						model: Module,
+					},
+				],
+			});
+			if (!language) {
+				throw new HttpException(
+					`Не получилось получить язык`,
+					HttpStatus.INTERNAL_SERVER_ERROR,
+				);
 			}
 			return language;
 		} catch (error) {
@@ -163,23 +106,18 @@ export class LanguagesService {
 
 	async remove(id: number) {
 		try {
-			// Проверяем, существует ли язык с таким id
 			const language = await this.languageRepository.findByPk(id);
 			if (!language) {
-				// Если нет, выбрасываем исключение с кодом 404
 				throw new HttpException(
 					`Язык с id: ${id} не найден`,
 					HttpStatus.NOT_FOUND,
 				);
 			}
-			// Если да, удаляем его
 			await this.languageRepository.destroy({
 				where: { id },
 			});
-			// Возвращаем сообщение об успехе
 			return 'Удалено успешно';
 		} catch (error) {
-			// Если произошла ошибка, выбрасываем исключение с кодом 500 и причиной
 			throw new HttpException(
 				'Ошибка при удалении языка',
 				HttpStatus.INTERNAL_SERVER_ERROR,

@@ -1,8 +1,8 @@
 import { PartialType } from '@nestjs/mapped-types';
 import { CreateLanguageDto } from './create-language.dto';
-import { LanguageModule } from 'src/modules/entities/module.entity';
+import { ApiProperty } from '@nestjs/swagger';
 
 export class UpdateLanguageDto extends PartialType(CreateLanguageDto) {
+	@ApiProperty({ description: 'Название языка', example: 'Русский' })
 	readonly title?: string;
-	readonly modules?: LanguageModule[];
 }

@@ -47,5 +47,5 @@ export class Lesson extends Model<Lesson, LessonCreationAttributes> {
 	module: Module;
 
 	@HasMany(() => Step)
-	modules: Step[];
+	steps: Step[];
 }

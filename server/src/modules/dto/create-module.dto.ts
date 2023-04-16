@@ -10,6 +10,6 @@ export class CreateModuleDto {
 	@ApiProperty({ description: 'ID языка', example: '1' })
 	readonly languageId: number;
 
-	@ApiProperty({ description: 'Тип языка', example: 'language' })
-	readonly type: string;
+	@ApiProperty({ description: 'ID типа', example: '1' })
+	readonly typeId: number;
 }

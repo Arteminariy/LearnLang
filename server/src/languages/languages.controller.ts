@@ -51,13 +51,8 @@ export class LanguagesController {
 		type: Language,
 	})
 	@Get(':id')
-	findOne(
-		@Param('id') id: string,
-		@Body() module: boolean,
-		lesson: boolean,
-		steps: boolean,
-	) {
-		return this.languagesService.findOne(+id, module, lesson, steps);
+	findOne(@Param('id') id: string) {
+		return this.languagesService.findOne(+id);
 	}
 
 	@ApiOperation({ summary: 'Обновить язык' })
@@ -74,12 +69,6 @@ export class LanguagesController {
 		return this.languagesService.update(+id, updateLanguageDto);
 	}
 
-	@ApiOperation({ summary: 'Добавить языковой модуль' })
-	@ApiResponse({
-		status: 200,
-		description: 'Языковой модуль успешно добавлен',
-		type: Language,
-	})
 	@ApiOperation({ summary: 'Удалить язык' })
 	@ApiResponse({
 		status: 200,
