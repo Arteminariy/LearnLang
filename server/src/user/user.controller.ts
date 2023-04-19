@@ -11,11 +11,15 @@ import {
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
+import { Roles } from 'src/auth/decorators/roles-auth.decorator';
+import { RolesGuard } from 'src/auth/guards/roles.guard';
+import { AddRoleDto } from './dto/add-role.dto';
+import { AddLanguageDto } from './dto/add-language.dto';
 
 @ApiTags('Пользователи')
-@Controller('user')
+@Controller('users')
 export class UserController {
 	constructor(private readonly userService: UserService) {}
 
@@ -44,5 +48,23 @@ export class UserController {
 	@Delete(':id')
 	remove(@Param('id') id: string) {
 		return this.userService.remove(+id);
+	}
+
+	@ApiOperation({ summary: 'Выдать роль' })
+	@ApiResponse({ status: 200 })
+	@Roles('ADMIN')
+	@UseGuards(RolesGuard)
+	@Post('/roles')
+	addRole(@Body() addRoleDto: AddRoleDto) {
+		return this.userService.addRole(addRoleDto);
+	}
+
+	@ApiOperation({ summary: 'Выбрать язык' })
+	@ApiResponse({ status: 200 })
+	@Roles('USER')
+	@UseGuards(RolesGuard)
+	@Post('/languages')
+	addLanguage(@Body() addLanguageDto: AddLanguageDto) {
+		return this.userService.addLanguage(addLanguageDto);
 	}
 }

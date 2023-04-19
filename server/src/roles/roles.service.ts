@@ -13,7 +13,7 @@ export class RolesService {
 		return role;
 	}
 
-	findAll() {
+	async findAll() {
 		return `This action returns all roles`;
 	}
 
@@ -24,11 +24,11 @@ export class RolesService {
 		return role;
 	}
 
-	update(id: number, updateRoleDto: UpdateRoleDto) {
+	async update(id: number, updateRoleDto: UpdateRoleDto) {
 		return `This action updates a #${id} role`;
 	}
 
-	remove(id: number) {
+	async remove(id: number) {
 		return `This action removes a #${id} role`;
 	}
 }

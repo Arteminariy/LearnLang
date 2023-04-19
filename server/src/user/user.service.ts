@@ -5,6 +5,8 @@ import { InjectModel } from '@nestjs/sequelize';
 import { User } from './entities/user.entity';
 import { RolesService } from 'src/roles/roles.service';
 import { Role } from 'src/roles/entities/role.entity';
+import { AddRoleDto } from './dto/add-role.dto';
+import { AddLanguageDto } from './dto/add-language.dto';
 
 @Injectable()
 export class UserService {
@@ -105,5 +107,20 @@ export class UserService {
 			include: { model: Role },
 		});
 		return user;
+	}
+	async addRole(addRoleDto: AddRoleDto) {
+		const user = await this.userRepository.findByPk(addRoleDto.userId);
+		const role = await this.roleService.findOne(addRoleDto.value);
+		if (user && role) {
+			await user.$add('role', role.id);
+			return addRoleDto;
+		}
+		throw new HttpException(
+			'Пользователь или роль не найдены',
+			HttpStatus.NOT_FOUND,
+		);
+	}
+	async addLanguage(addLanguageDto: AddLanguageDto) {
+		return addLanguageDto;
 	}
 }
