@@ -14,6 +14,10 @@ import { Step } from './steps/entities/step.entity';
 import { ModuleTypesModule } from './module-types/module-types.module';
 import { ModuleType } from './module-types/entities/module-type.entity';
 import { RolesModule } from './roles/roles.module';
+import { Role } from './roles/entities/role.entity';
+import { User } from './user/entities/user.entity';
+import { UserRoles } from './roles/entities/user-roles.entity';
+import { UserLanguage } from './user/entities/user-language.entity';
 
 @Module({
 	imports: [
@@ -27,7 +31,17 @@ import { RolesModule } from './roles/roles.module';
 			username: process.env.POSTGRES_USER,
 			password: String(process.env.POSTGRES_PASSWORD),
 			database: process.env.POSTGRES_DB,
-			models: [Language, LModule, Lesson, Step, ModuleType],
+			models: [
+				Language,
+				LModule,
+				Lesson,
+				Step,
+				ModuleType,
+				Role,
+				User,
+				UserRoles,
+				UserLanguage,
+			],
 			autoLoadModels: true,
 			synchronize: true,
 		}),

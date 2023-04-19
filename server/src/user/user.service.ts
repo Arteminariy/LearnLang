@@ -3,10 +3,15 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { InjectModel } from '@nestjs/sequelize';
 import { User } from './entities/user.entity';
+import { RolesService } from 'src/roles/roles.service';
+import { Role } from 'src/roles/entities/role.entity';
 
 @Injectable()
 export class UserService {
-	constructor(@InjectModel(User) private userRepository: typeof User) {}
+	constructor(
+		@InjectModel(User) private userRepository: typeof User,
+		private roleService: RolesService,
+	) {}
 	async create(createUserDto: CreateUserDto) {
 		try {
 			const user = await this.userRepository.create(createUserDto);
@@ -16,6 +21,9 @@ export class UserService {
 					HttpStatus.INTERNAL_SERVER_ERROR,
 				);
 			}
+			const role = await this.roleService.findOne('USER');
+			await user.$set('roles', [role.id]);
+			user.roles = [role];
 			return user;
 		} catch (error) {
 			return new HttpException(
@@ -27,7 +35,9 @@ export class UserService {
 
 	async findAll() {
 		try {
-			const users = await this.userRepository.findAll();
+			const users = await this.userRepository.findAll({
+				include: { all: true },
+			});
 			if (!users) {
 				throw new HttpException(
 					`Не получилось получить пользователей`,
@@ -87,5 +97,13 @@ export class UserService {
 
 	async remove(id: number) {
 		return `This action removes a #${id} user`;
+	}
+
+	async getByLogin(login: string) {
+		const user = await this.userRepository.findOne({
+			where: { login },
+			include: { model: Role },
+		});
+		return user;
 	}
 }

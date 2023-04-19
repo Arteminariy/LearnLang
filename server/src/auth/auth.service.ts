@@ -1,26 +1,64 @@
-import { Injectable } from '@nestjs/common';
-import { CreateAuthDto } from './dto/create-auth.dto';
-import { UpdateAuthDto } from './dto/update-auth.dto';
+import {
+	HttpException,
+	HttpStatus,
+	Injectable,
+	UnauthorizedException,
+} from '@nestjs/common';
+import { CreateUserDto } from 'src/user/dto/create-user.dto';
+import { UserService } from 'src/user/user.service';
+import * as bcrypt from 'bcryptjs';
+import { User } from 'src/user/entities/user.entity';
+import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
 export class AuthService {
-  create(createAuthDto: CreateAuthDto) {
-    return 'This action adds a new auth';
-  }
+	constructor(
+		private userService: UserService,
+		private jwtService: JwtService,
+	) {}
 
-  findAll() {
-    return `This action returns all auth`;
-  }
+	async login(userDto: CreateUserDto) {
+		const user = await this.validateUser(userDto);
+		return this.generateToken(user);
+	}
 
-  findOne(id: number) {
-    return `This action returns a #${id} auth`;
-  }
+	async registration(userDto: CreateUserDto) {
+		const candidate = await this.userService.getByLogin(userDto.login);
+		if (candidate) {
+			throw new HttpException(
+				'Пользователь с таким логином уже существует',
+				HttpStatus.BAD_REQUEST,
+			);
+		}
+		const hashedPassword = await bcrypt.hash(userDto.password, 5);
+		const user = await this.userService.create({
+			...userDto,
+			password: hashedPassword,
+		});
+		if (user instanceof HttpException) {
+			throw new HttpException(
+				'Не удалось зарегистрировать пользователя',
+				HttpStatus.INTERNAL_SERVER_ERROR,
+			);
+		}
+		return this.generateToken(user);
+	}
 
-  update(id: number, updateAuthDto: UpdateAuthDto) {
-    return `This action updates a #${id} auth`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} auth`;
-  }
+	private async generateToken(user: User) {
+		const payload = { login: user.login, id: user.id, roles: user.roles };
+		return { token: this.jwtService.sign(payload) };
+	}
+	private async validateUser(userDto: CreateUserDto) {
+		const user = await this.userService.getByLogin(userDto.login);
+		const passwordEquals = await bcrypt.compare(
+			userDto.password,
+			user.password,
+		);
+		if (user && passwordEquals) {
+			return user;
+		}
+		throw new UnauthorizedException({
+			message: 'Некорректный логин или пароль',
+		});
+	}
 }

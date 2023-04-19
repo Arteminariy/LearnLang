@@ -1,14 +1,15 @@
 import { ApiProperty } from '@nestjs/swagger';
 import {
+	BelongsToMany,
 	Column,
 	DataType,
-	ForeignKey,
 	HasMany,
 	Model,
 	Table,
 } from 'sequelize-typescript';
 import { Role } from 'src/roles/entities/role.entity';
 import { UserLanguage } from './user-language.entity';
+import { UserRoles } from 'src/roles/entities/user-roles.entity';
 
 interface UserCreationAttribute {
 	login: string;
@@ -42,11 +43,8 @@ export class User extends Model<User, UserCreationAttribute> {
 	})
 	password: string;
 
-	@ForeignKey(() => Role)
-	@Column({
-		type: DataType.INTEGER,
-	})
-	roleId: number;
+	@BelongsToMany(() => Role, () => UserRoles)
+	roles: Role[];
 
 	@HasMany(() => UserLanguage)
 	userLanguages: UserLanguage[];
