@@ -18,6 +18,7 @@ import { Role } from './roles/entities/role.entity';
 import { User } from './user/entities/user.entity';
 import { UserRoles } from './roles/entities/user-roles.entity';
 import { UserLanguage } from './user/entities/user-language.entity';
+import { FilesModule } from './files/files.module';
 
 @Module({
 	imports: [
@@ -53,6 +54,7 @@ import { UserLanguage } from './user/entities/user-language.entity';
 		AuthModule,
 		ModuleTypesModule,
 		RolesModule,
+		FilesModule,
 	],
 	controllers: [],
 	providers: [],
