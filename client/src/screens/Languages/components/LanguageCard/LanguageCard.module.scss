@@ -1,0 +1,24 @@
+@import '../../../../styles/variables';
+.languageCard {
+    width: 100%;
+    padding: calc($step * 2);
+    background-color: $secondary;
+    border-radius: $step;
+    margin-top: calc($step * 2);
+    color: $light;
+    text-decoration: none;
+
+    &__link {
+        text-decoration: none;
+    }
+
+    &__title {
+    }
+    &__content {
+
+
+        &__param {
+
+        }
+    }
+}
