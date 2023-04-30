@@ -1,0 +1,11 @@
+@import '../../../../styles/variables';
+.moduleCard {
+    padding: calc($step * 2);
+    box-shadow: 0px 0px 1px 2px $light;
+    border-radius: $step;
+    transition: ease-in-out;
+
+    &:hover {
+        box-shadow: 0px 0px 1px 4px $light;
+    }
+}
