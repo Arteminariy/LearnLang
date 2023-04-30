@@ -5,4 +5,8 @@
     height: $header-height;
     background-color: $dark;
     color: $light;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
 }

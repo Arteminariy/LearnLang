@@ -20,7 +20,7 @@ const NavBar: FC<INavBarProps> = ({ navBarLinks }) => {
 						<Link
 							key={el.text}
 							href={el.href}
-							className={styles.navigation__links__link}
+							className={styles.navigation__links__item}
 						>
 							{el.text}
 						</Link>
