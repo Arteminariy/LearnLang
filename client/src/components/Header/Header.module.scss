@@ -1,0 +1,8 @@
+@import "../../styles/variables";
+
+.header {
+    width: 100%;
+    height: $header-height;
+    background-color: $dark;
+    color: $light;
+}

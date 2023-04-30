@@ -1,0 +1,22 @@
+@import "../../styles/variables";
+
+.navigation {
+	&__links {
+        display: flex;
+        flex-direction: row;
+
+		&__link {
+			color: $light;
+            text-decoration: none;
+            height: $header-height;
+            padding: 0 10px;
+            text-align: center;
+            display: flex;
+            align-items: center;
+
+            &:hover {
+                background-color: $darker;
+            }
+		}
+	}
+}
