@@ -7,7 +7,7 @@ const Header: FC = () => {
 	
 	const navBarLinks: INavBarLink[] = [
 		{href: '/', text: 'Главная'},
-		{href: '/language', text: 'Языки'}
+		{href: '/languages', text: 'Языки'}
 	]
 
 	return (

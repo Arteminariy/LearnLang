@@ -1,8 +1,9 @@
+import LanguagesPage from '@/screens/Languages/LanguagesPage'
 import { FC } from 'react'
 
 const Language: FC = () => {
   return (
-    <div>Language</div>
+    <LanguagesPage/>
   )
 }
 export default Language
