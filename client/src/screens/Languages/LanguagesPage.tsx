@@ -1,10 +1,16 @@
-import { FC } from 'react'
-import styles from './LanguagesPage.module.scss'
+import { FC, useEffect } from 'react';
+import styles from './LanguagesPage.module.scss';
+import { useDispatch } from 'react-redux';
+import { fetchLanguages } from '@/store/languageReducer';
+import { AppDispatch } from '@/store';
 
 const LanguagesPage: FC = () => {
-  return (
-    <div>LanguagesPage</div>
-  )
-}
+	const dispatch = useDispatch<AppDispatch>();
 
-export default LanguagesPage
+	useEffect(() => {
+		dispatch(fetchLanguages());
+	}, [dispatch]);
+	return <ul></ul>;
+};
+
+export default LanguagesPage;
