@@ -31,10 +31,6 @@ export class Module extends Model<Module, ModuleCreationAttributes> {
 	id: number;
 
 	@ApiProperty({
-		description: 'Тип модуля',
-		example: 'language',
-	})
-	@ApiProperty({
 		description: 'Название модуля',
 		example: 'Модуль 1 — Введение',
 	})
