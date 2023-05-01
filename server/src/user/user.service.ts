@@ -35,18 +35,20 @@ export class UserService {
 		}
 	}
 
-	async findAll() {
+	async findAll(limit: number, offset: number) {
 		try {
-			const users = await this.userRepository.findAll({
+			const { count, rows } = await this.userRepository.findAndCountAll({
+				limit: limit,
+				offset: offset,
 				include: { all: true },
 			});
-			if (!users) {
+			if (!rows) {
 				throw new HttpException(
 					`Не получилось получить пользователей`,
 					HttpStatus.INTERNAL_SERVER_ERROR,
 				);
 			}
-			return users;
+			return { count, rows };
 		} catch (error) {
 			return new HttpException(
 				'Ошибка при получении пользователя',
