@@ -19,7 +19,7 @@ interface UserCreationAttribute {
 
 @Table({ tableName: 'users' })
 export class User extends Model<User, UserCreationAttribute> {
-	@ApiProperty({ description: 'ID языкового модуля', example: '1' })
+	@ApiProperty({ description: 'ID пользователя', example: '1' })
 	@Column({
 		type: DataType.INTEGER,
 		unique: true,
