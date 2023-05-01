@@ -65,6 +65,16 @@ export class LanguagesService {
 				include: [
 					{
 						model: Module,
+						include: [
+							{
+								model: Lesson,
+								include: [
+									{
+										model: Step,
+									},
+								],
+							},
+						],
 					},
 				],
 			});

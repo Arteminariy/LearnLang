@@ -1,6 +1,7 @@
 import { IModule } from '@/@types';
-import { FC } from 'react';
+import { FC, useEffect } from 'react';
 import styles from './ModuleCard.module.scss';
+import LessonCard from '../LessonCard/LessonCard';
 
 type IModuleCardProps = {
 	module: IModule;
@@ -16,9 +17,11 @@ const ModuleCard: FC<IModuleCardProps> = ({ module }) => {
 				illum quae nisi dolore! Animi natus delectus est earum possimus
 				autem quaerat sint.
 			</p>
-            <div className={styles.moduleCard__content}>
-                Здесь должен выводиться список уроков, через map и компонент LessonCard(должен ссылаться на страницу с уроком)
-            </div>
+			<div className={styles.moduleCard__content}>
+				{module.lessons && (module.lessons.length > 0 ? module.lessons.map((lesson) => {
+					return <LessonCard key={lesson.id} lesson={lesson} />;
+				}) : <p>В данном модуле нет уроков</p>)}
+			</div>
 		</div>
 	);
 };
